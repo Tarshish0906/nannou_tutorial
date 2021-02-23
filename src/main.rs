@@ -20,11 +20,19 @@ fn view(app: &App, _model: &Model, frame: Frame) {
     // キャンバスを取得
     let draw = app.draw();
 
+    let sine = app.time.sin();
+    let slowersine = (app.time / 2.0).sin();
+
+    let boundary = app.window_rect();
+
+    let x = map_range(sine, -1.0, 1.0, boundary.left(), boundary.right());
+    let y = map_range(slowersine, -1.0, 1.0, boundary.bottom(), boundary.top());
+
     // 背景色を設定
     draw.background().color(NAVY);
 
-    // 1辺100の正方形を原点に表示
-    draw.rect().x_y(0.0, 0.0).w_h(100.0, 100.0).color(BLUE);
+    // 半径10の円を原点に表示
+    draw.ellipse().x_y(x, y).color(STEELBLUE);
 
     // フレームに書き出し
     draw.to_frame(app, &frame).unwrap();
