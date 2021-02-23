@@ -21,18 +21,21 @@ fn view(app: &App, _model: &Model, frame: Frame) {
     let draw = app.draw();
 
     let sine = app.time.sin();
-    let slowersine = (app.time / 2.0).sin();
+    let slowersine1 = (app.time / 2.0).sin();
+    let slowersine2 = (app.time / 3.0).sin();
 
     let boundary = app.window_rect();
 
     let x = map_range(sine, -1.0, 1.0, boundary.left(), boundary.right());
-    let y = map_range(slowersine, -1.0, 1.0, boundary.bottom(), boundary.top());
+    let y1 = map_range(slowersine1, -1.0, 1.0, boundary.bottom(), boundary.top());
+    let y2 = map_range(slowersine2, -1.0, 1.0, boundary.bottom(), boundary.top());
 
     // 背景色を設定
     draw.background().color(NAVY);
 
     // 半径10の円を原点に表示
-    draw.ellipse().x_y(x, y).color(STEELBLUE);
+    draw.ellipse().x_y(x, y1).color(STEELBLUE);
+    draw.ellipse().x_y(x, y2).color(BLUE);
 
     // フレームに書き出し
     draw.to_frame(app, &frame).unwrap();
