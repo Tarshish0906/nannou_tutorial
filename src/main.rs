@@ -20,7 +20,7 @@ fn view(app: &App, model: &Model, frame: Frame) {
     frame.clear(BLACK);
 
     let win = app.window_rect();
-    let r = Rect::from_w_h(100.0, 100.0).bottom_left_of(win);
+    let r = Rect::from_w_h(200.0, 100.0).bottom_left_of(win);
 
     let draw = app.draw();
     draw.texture(&model.texture).xy(r.xy()).wh(r.wh());
