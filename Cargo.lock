@@ -1275,6 +1275,7 @@ name = "nannou_tutorial"
 version = "0.1.0"
 dependencies = [
  "nannou",
+ "svg",
 ]
 
 [[package]]
@@ -2225,6 +2226,12 @@ checksum = "418bb14643aa55a7841d5303f72cf512cfb323b8cc221d51580500a1ca75206c"
 dependencies = [
  "lock_api 0.4.2",
 ]
+
+[[package]]
+name = "svg"
+version = "0.9.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "dcbef9cf3cf75dd7772fb1f40dd6d90278a5263454db94ee399500ee9918aaa7"
 
 [[package]]
 name = "syn"

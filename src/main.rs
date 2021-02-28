@@ -1,48 +1,36 @@
-use nannou::prelude::*;
+use std::f64::consts::PI;
+use svg::node::element::path::Data;
+use svg::node::element::Path;
+use svg::Document;
 
-struct Model {
-    speed: f32,
+fn parametric(t: f64) -> (f64, f64) {
+    return (
+        (PI * t).sin() + 0.8 * (4. * PI * t).sin() + (128. * PI * t).sin() * 0.5,
+        (PI * t).cos() + 0.8 * (4. * PI * t).cos() + (128. * PI * t).cos() * 0.5,
+    );
 }
 
 fn main() {
-    nannou::app(model).event(event).simple_window(view).run();
-}
-
-fn model(_app: &App) -> Model {
-    Model { speed: 5.0 }
-}
-
-fn event(_app: &App, model: &mut Model, event: Event) {
-    match event {
-        Event::WindowEvent {
-            id: _id,
-            simple: window_event,
-        } => {
-            if let Some(KeyPressed(key)) = window_event {
-                match key {
-                    Key::Up => model.speed = model.speed + 1.0,
-                    Key::Down => model.speed = model.speed - 1.0,
-                    _ => {}
-                }
-            }
-        }
-        _ => {}
+    fn map(t: f64) -> (f64, f64) {
+        let (x, y) = parametric(t);
+        return (50. + 20. * x, 50. + 20. * y);
     }
-}
 
-fn view(app: &App, model: &Model, frame: Frame) {
-    let t = app.time;
-    let draw = app.draw();
+    let mut data = Data::new().move_to(map(0.));
+    let nb = 10000;
+    for i in 1..nb {
+        let t = 2.0 * (i as f64) / (nb as f64);
+        data = data.line_to(map(t));
+    }
+    data = data.close();
 
-    draw.background().color(BLACK);
+    let path = Path::new()
+        .set("fill", "none")
+        .set("stroke", "black")
+        .set("stroke-width", 0.2)
+        .set("d", data);
 
-    let x = model.speed * t as f32;
-    let point = pt2(x.cos(), x.sin()) * 100.0;
+    let document = Document::new().set("viewBox", (0, 0, 100, 100)).add(path);
 
-    draw.ellipse()
-        .color(STEELBLUE)
-        .w(200.0)
-        .h(200.0)
-        .x_y(point.x, point.y);
-    draw.to_frame(app, &frame).unwrap();
+    svg::save("image.svg", &document).unwrap();
 }
