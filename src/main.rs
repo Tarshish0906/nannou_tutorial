@@ -5,8 +5,8 @@ use svg::Document;
 
 fn parametric(t: f64) -> (f64, f64) {
     return (
-        (PI * t).sin() + 0.8 * (4. * PI * t).sin() + (128. * PI * t).sin() * 0.5,
-        (PI * t).cos() + 0.8 * (4. * PI * t).cos() + (128. * PI * t).cos() * 0.5,
+        (PI * t).sin() + 0.8 * (4. * PI * t).sin() + (128. * PI * t).sin() * 0.9,
+        (PI * t).cos() + 0.8 * (4. * PI * t).cos() + (128. * PI * t).cos() * 0.9,
     );
 }
 
